@@ -3,7 +3,7 @@ import streamlit as st
 # Page Setup
 st.set_page_config(page_title="💪 BMI Calculator | Ruchi", layout="centered")
 
-# Styling with CSS
+# Updated CSS Styling
 st.markdown("""
     <style>
         .main {
@@ -13,11 +13,9 @@ st.markdown("""
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
         }
         .title {
-            background: linear-gradient(to right, #ff69b4, #ffa07a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: black;
             font-size: 36px;
-            font-weight: 700;
+            font-weight: 800;
             text-align: center;
             margin-bottom: 1.5rem;
         }
@@ -27,13 +25,19 @@ st.markdown("""
             font-size: 14px;
             margin-top: 2rem;
         }
+
+        /* Remove top white space */
+        header, .block-container {
+            padding-top: 0rem !important;
+        }
     </style>
 """, unsafe_allow_html=True)
 
+# Start container
 st.markdown('<div class="main">', unsafe_allow_html=True)
-st.markdown('<div class="title"> Body Mass Index (BMI) Calculator</div>', unsafe_allow_html=True)
+st.markdown('<div class="title">💪 Body Mass Index (BMI) Calculator</div>', unsafe_allow_html=True)
 
-# User Inputs
+# User Input
 name = st.text_input("📝 Your Name")
 col1, col2 = st.columns(2)
 
@@ -65,7 +69,7 @@ if st.button("🔍 Calculate BMI"):
     else:
         st.error("🚫 Please fill in all the fields properly.")
 
-# Classification Table
+# BMI Table
 with st.expander("📊 BMI Classification Table"):
     st.markdown("""
     | BMI Range      | Category       |
@@ -77,5 +81,5 @@ with st.expander("📊 BMI Classification Table"):
     """)
 
 # Footer
-st.markdown('<div class="footer">💻 Developed by: ER Ruchi Tiwari</div>', unsafe_allow_html=True)
+st.markdown('<div class="footer">👨‍💻 Developed by: ER Ruchi Tiwari</div>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
