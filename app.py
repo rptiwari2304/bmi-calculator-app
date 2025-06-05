@@ -1,55 +1,45 @@
 import streamlit as st
 
-# Page config
-st.set_page_config(page_title="BMI Calculator", layout="centered")
+st.set_page_config(page_title="BMI Calculator App", layout="centered")
 
-# Title and developer name
-st.title("💪 BMI (Body Mass Index) Calculator")
-st.markdown("**Developed by: ER Ruchi Tiwari**")
+st.title("💪 BMI Calculator App")
+st.markdown("👨‍💻 Developed by **Ruchi**")
 
-# Sidebar for input
-st.sidebar.header("📥 Enter Your Details")
+st.markdown("## 🔢 Enter Your Name")
 
-# User input
-name = st.sidebar.text_input("👤 Name")
-height = st.sidebar.number_input("📏 Height (in cm)", min_value=50.0, max_value=250.0, step=1.0)
-weight = st.sidebar.number_input("⚖️ Weight (in kg)", min_value=10.0, max_value=300.0, step=1.0)
+# Input from user
+height_cm = st.number_input("Enter your height (in cm):", min_value=50.0, max_value=300.0, step=0.1)
+weight_kg = st.number_input("Enter your weight (in kg):", min_value=10.0, max_value=300.0, step=0.1)
 
-# BMI Calculation
-if st.sidebar.button("🧮 Calculate BMI"):
-    if height > 0:
-        height_m = height / 100  # convert to meters
-        bmi = weight / (height_m ** 2)
-        st.success(f"✅ {name}, your BMI is **{bmi:.2f}**")
+if st.button("Calculate BMI"):
+    if height_cm > 0 and weight_kg > 0:
+        height_m = height_cm / 100
+        bmi = weight_kg / (height_m ** 2)
 
-        # BMI Category logic
+        st.success(f"✅ Your BMI is: **{bmi:.2f}**")
+
+        # BMI Categories
         if bmi < 18.5:
-            status = "Underweight"
-            suggestion = "You should gain some weight to reach a healthy BMI."
+            st.warning("📉 Category: Underweight")
         elif 18.5 <= bmi < 24.9:
-            status = "Normal (Healthy)"
-            suggestion = "Great! Keep maintaining your healthy lifestyle."
+            st.success("✅ Category: Normal weight")
         elif 25 <= bmi < 29.9:
-            status = "Overweight"
-            suggestion = "Try to exercise and manage diet to reduce your BMI."
+            st.warning("⚠️ Category: Overweight")
         else:
-            status = "Obese"
-            suggestion = "It is important to consult a doctor and work on a weight-loss plan."
+            st.error("🚨 Category: Obese")
 
-        # Show result
-        st.info(f"📊 You are classified as: **{status}**")
-        st.write(f"💡 Suggestion: {suggestion}")
+        # Ideal weight calculation based on BMI 18.5 to 24.9
+        min_ideal_weight = 18.5 * (height_m ** 2)
+        max_ideal_weight = 24.9 * (height_m ** 2)
 
-        # BMI Ranges Table
-        st.markdown("### 📌 BMI Ranges:")
-        st.markdown("""
-        | BMI Range      | Category       |
-        |----------------|----------------|
-        | Below 18.5     | Underweight    |
-        | 18.5 - 24.9    | Normal         |
-        | 25 - 29.9      | Overweight     |
-        | 30 and above   | Obese          |
-        """)
+        st.markdown(f"🎯 **Ideal Weight Range:** {min_ideal_weight:.1f} kg to {max_ideal_weight:.1f} kg")
 
     else:
-        st.error("❌ Please enter a valid height!")
+        st.error("❌ Please enter valid height and weight!")
+
+# BMI Info Table
+st.markdown("## 📊 BMI Classification Table")
+st.table({
+    "BMI Range": ["< 18.5", "18.5 – 24.9", "25 – 29.9", "30 and above"],
+    "Category": ["Underweight", "Normal", "Overweight", "Obese"]
+})
